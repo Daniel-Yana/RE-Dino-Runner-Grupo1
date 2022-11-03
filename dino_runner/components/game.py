@@ -1,9 +1,10 @@
 import pygame
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.obstacles_manager import ObstacleManager
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, SMALL_CACTUS, LARGE_CACTUS, TITLE, FPS
+from dino_runner.utils.constants import BG, ICON, RUNNING, SCREEN_HEIGHT, SCREEN_WIDTH, SMALL_CACTUS, LARGE_CACTUS, TITLE, FPS
 from dino_runner.components.dinosaur import Dinosaur
 
+FONT_STYLE = "freesansbold.ttf"
 class Game:
     def __init__(self):
         pygame.init()
@@ -17,6 +18,13 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+
+    def execute(self):
+        self.executing = True
+        while self.executing:
+            if not self.playing:
+                self.show_menu()
+        pygame.quit()
 
     def run(self):
         # Game loop: events - update - draw
@@ -54,3 +62,23 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
             self.x_pos_bg -= self.game_speed
+
+    def show_menu(self):
+        #pintar ventana
+        self.screen.fill((255, 255, 255))
+        half_screen_height = SCREEN_HEIGHT //2
+        half_screen_width = SCREEN_WIDTH //2
+        #mostrar mensaje de bienvenida
+        font = pygame.font.Font(FONT_STYLE, 30)
+        text_component = font.render("Press any key to play", True, (0,0,0))
+        text_rect = text_component.get_rect()
+        text_rect.center = (half_screen_width, half_screen_height)
+        self.screen.blit(text_component, text_rect)
+        #mostrar mensaje de volver a jugar
+        #mostrar un icono
+        self.screen.blit(RUNNING[0], (half_screen_width -30, half_screen_height))
+        #actualizar ventana
+        pygame.display.update()
+        #escuchar eventos
+        print("Menu")
+        

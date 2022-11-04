@@ -1,11 +1,11 @@
-'''import random
+import random
 
 from dino_runner.utils.constants import BIRD
-
 from .obstacle import Obstacle
-class Bird(Obstacle):
+class Birds(Obstacle):
+    POST = 100
     def __init__(self, images):
-        type = random.randint(0,5)
+        type = 1
         super().__init__(images, type)
-        self.rect.y = 325'''
-            
+        self.rect.y = self.POST
+        
